@@ -2997,7 +2997,7 @@ function saveProfileEdit() {
       })
       .catch(err => {
         console.log('Photo upload error:', err);
-        toast('Photo save nahi hui, dobara try karein', 'error');
+                toast('Photo error: ' + err.message, 'error');
       });
   }
 }

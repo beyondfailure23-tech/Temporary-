@@ -4142,8 +4142,8 @@ function updateHomeCounts() {
   const el = document.getElementById('count-' + myCourse);
   if (!el) return;
   const count = myCourse === 'ca'
-    ? notes.filter(n => ['foundation', 'intermediate', 'final'].includes(n.level)).length
-    : notes.filter(n => (n.level || '').startsWith('cma-')).length;
+    ? notes.filter(n => !(n.level || '').startsWith('cma')).length   // 1103
+    : notes.filter(n => (n.level || '').startsWith('cma-')).length;  // 67
   el.textContent = count;
 }
 

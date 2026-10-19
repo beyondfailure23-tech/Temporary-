@@ -4316,15 +4316,17 @@ async function goToCourseHub(course) {
   html += bigLevelCardHTML(course, 'intermediate', notes);
   html += bigLevelCardHTML(course, 'final', notes);
 
+   const mrKey = course === 'ca' ? 'masterresources' : 'cma-masterresources';
+  const tsKey = course === 'ca' ? 'testseries' : 'cma-testseries';
   const extras = [
-    { key: 'masterresources', emoji: '📦', label: 'Master Resources', sub: 'General notes, modules, resources', action: `goToMasterResources('${course}')` },
-    { key: 'testseries', emoji: '🏆', label: 'Test Series', sub: 'PYQ, RTP, MTP & MCQ Tests', action: `goToTestSeries('${course}')` }
+    { key: 'masterresources', emoji: '📦', label: 'Master Resources', sub: 'General notes, modules, resources', count: notes.filter(n => n.level === mrKey).length, action: `goToMasterResources('${course}')` },
+    { key: 'testseries', emoji: '🏆', label: 'Test Series', sub: 'PYQ, RTP, MTP & MCQ Tests', count: notes.filter(n => n.level === tsKey).length, action: `goToTestSeries('${course}')` }
   ];
   html += extras.map(it => `<div class="subject-card" onclick="${it.action}">
       <div class="sub-num" style="background:${color}22;color:${color}">${it.emoji}</div>
       <div class="sub-info">
         <div class="sub-name">${it.label}</div>
-        <div class="sub-count">${it.sub}</div>
+                <div class="sub-count">${it.count} notes • ${it.sub}</div>
       </div>
       <div class="sub-chevron">›</div>
     </div>`).join('');
@@ -4347,7 +4349,7 @@ function subjectCardHTML(name, dataLevel, badgeLabel, color, notes) {
       <div class="sub-num" style="background:${color}22;color:${color}">${badgeLabel}</div>
       <div class="sub-info">
         <div class="sub-name">${name}</div>
-        <div class="sub-count">${isMCQ ? (dataLevel === 'foundation' ? '2 subjects • MCQ Tests' : '6 subjects • MCQ Tests') : isBundle ? 'PYQ • RTP • MTP' : count + ' notes'}</div>
+                <div class="sub-count">${isMCQ ? (dataLevel === 'foundation' ? '2 subjects • MCQ Tests' : '6 subjects • MCQ Tests') : isBundle ? count + ' notes • PYQ • RTP • MTP' : count + ' notes'}</div>
       </div>
       <div class="sub-chevron">›</div>
     </div>`;
